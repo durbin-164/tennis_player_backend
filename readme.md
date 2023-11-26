@@ -57,3 +57,12 @@ This uploads file contain locally saved clip.
 I you set 
 IS_CLEAN_LOCAL_VIDEOS = true, it will clean this folder
 otherwise it will keep. 
+
+
+## Model 
+Download model from given link in release note and
+keep on bellow folders. 
+```angular2html
+app
+    - models
+```
