@@ -8,3 +8,4 @@ tensorflow-cpu==2.15.0
 ultralytics==8.0.218
 boto3==1.29.6
 python-dotenv==1.0.0
+ffmpeg_python==0.2.0
