@@ -52,8 +52,10 @@ IS_CLEAN_LOCAL_VIDEOS:
 ### Local saved location:
 ```
 project_root:
-    app:
-        uploads
+    static:
+        - uploads
+        - thumbnails
+        
 ```
 This uploads file contain locally saved clip. 
 I you set 
@@ -65,6 +67,6 @@ otherwise it will keep.
 Download model from given link in release note and
 keep on bellow folders. 
 ```angular2html
-app
+project_root:
     - models
 ```

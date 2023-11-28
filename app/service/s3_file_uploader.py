@@ -23,8 +23,8 @@ def upload_file_to_s3(local_file_path, bucket_name, s3_file_name):
         # Generate the public URL
         public_url = f"https://{bucket_name}.s3.amazonaws.com/{s3_file_name}"
 
-        print(f"File '{local_file_path}' uploaded to '{bucket_name}' as '{s3_file_name}'")
-        print(f"Public URL: {public_url}")
+        # print(f"File '{local_file_path}' uploaded to '{bucket_name}' as '{s3_file_name}'")
+        # print(f"Public URL: {public_url}")
 
         return public_url
 
