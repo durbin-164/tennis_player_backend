@@ -37,7 +37,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     os.remove(file_path)
 
     # upload video clip to s3
-    s3_file_list=None
+    s3_file_list = None
     if settings.is_upload_to_s3:
         filename_without_extension, _ = os.path.splitext(os.path.basename(file_path))
         s3_file_list = upload_folder_to_s3(upload_path, settings.aws_s3_bucket_output, filename_without_extension)
@@ -51,7 +51,7 @@ async def create_upload_file(file: UploadFile = File(...)):
         video_file_path = s3_file_list
     else:
         for file_name in video_clip_file_list:
-            static_path = os.path.join('static', file_name.split('static/')[-1])
+            static_path = os.path.join('static', file_name.split(f'static{os.sep}')[-1])
             video_file_path.append(static_path)
 
     return {"file_paths": video_file_path, "thumbnail_paths": thumbnail_path}
