@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     thumbnail_dir: str = os.path.join(statis_dir, 'thumbnails')
     lstm_bin_size: int = 24
     frame_inverse_ratio: int = 3
-    lstm_threshold: float = 0.7
+    lstm_threshold: float = 0.5
     # max_frame_process: int = 10000
     sliding_size: int = 5
     serve_distance: int = 5+3  # seconds [padding 3 seconds]
@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     is_upload_to_s3: bool = False
 
     # Model
-    lstm_model_name: str = 'lstm_model_24_s2_v1_18.keras'
+    lstm_model_name: str = 'lstm_model_24_s2_v1_15.keras'
     lstm_model_path: str = os.path.join(root_dir, 'models', lstm_model_name)
 
 
