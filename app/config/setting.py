@@ -15,8 +15,8 @@ class Settings(BaseSettings):
     frame_inverse_ratio: int = 3
     lstm_threshold: float = 0.7
     # max_frame_process: int = 10000
-    sliding_size: int = 8
-    serve_distance: int = 3  # seconds
+    sliding_size: int = 5
+    serve_distance: int = 5+3  # seconds [padding 3 seconds]
     serve_sequence_length: int = 1
     max_serve_in_sequence: int = 1
     is_clean_local_videos: bool = False
