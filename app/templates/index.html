@@ -1,41 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tennis Video</title>
-    <link rel="stylesheet" href="static/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="static/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BoomStatsAnalysis tennis</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="app-bar">
-            <img src="/static/logo.png" alt="Logo" class="logo">
-            <h1>Tennis</h1>
+      <div class="app-bar">
+        <img src="/static/logo.png" alt="Logo" class="logo" />
+      </div>
+       <form
+        id="uploadForm"
+        action="/api/upload-file/"
+        method="post"
+        enctype="multipart/form-data"
+        >
+
+        <div class="name-form" style="display: flex;">
+          <div>
+            <h4>Player 1</h4>
+            <input type="text" id="player1-name" placeholder="player 1 name"  name="player1_name"/>
+          </div>
+          <div>
+            <h4>Player 2</h4>
+            <input type="text" id="player2-name" placeholder="player 2 name" name="player2_name"/>
+          </div>
+          <div>
+            <h4>Location</h4>
+            <input type="text" id="location" placeholder="Enter Location" name="location"/>
+          </div>
+          <div>
+            <h4>Date</h4>
+            <input type="text" id="date" placeholder="Enter Date" name="date"/>
+          </div>
         </div>
-        <form id="uploadForm" action="/api/upload-file/" method="post" enctype="multipart/form-data">
-            <div class="input-container">
-                <label for="fileInput" class="file-label">
-                    <span id="chooseFileText">Choose File</span>
-                    <input type="file" name="file" id="fileInput" accept="video/*" required>
-                </label>
-                <span id="selectedFileName"></span>
-                <p id="errorMessage" class="error-message"></p> <!-- Added error message element -->
-            </div>
-            <button type="submit" id="submitButton">Submit</button>
-        </form>
-        <div id="loading" style="display: none;">
-            <p>Loading...</p>
+        <br>
+        <div class="input-container flex">
+          <label for="fileInput" class="file-label">
+            <span id="chooseFileText">Choose File</span>
+            <input
+              type="file"
+              name="file"
+              id="fileInput"
+              accept="video/*"
+              required
+            />
+          </label>
+          <div id="selectedFileDiv"><span id="selectedFileName"></span></div>
+          <p id="errorMessage" class="error-message"></p>
+          <button type="submit" id="submitButton">Submit</button>
         </div>
-        <div id="response" style="display: none;">
-            <div class="output-container">
-                <div class="thumbnail-images-text">
-                     <p>Thumbnail Images</p>
-                </div>
-                <div id="thumbnailContainer"></div>
-            </div>
-            <button id="resetButton">Reset</button>
+      </form>
+
+      <div id="loading" style="display: none">
+        <p>Processing...</p>
+      </div>
+      <div id="response" style="display: none">
+        <div class="output-container">
+          <div class="thumbnail-images-text">
+            <p>Output Videos</p>
+          </div>
+          <div id="thumbnailContainer"></div>
         </div>
+        <button id="resetButton">Reset</button>
+      </div>
     </div>
     <script src="/static/script.js"></script>
-</body>
+  </body>
 </html>

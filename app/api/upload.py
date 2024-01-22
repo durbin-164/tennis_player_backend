@@ -1,8 +1,10 @@
 import os.path
 from uuid import uuid4
 
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter
+from fastapi import File, UploadFile, Form
 
+from app.api.dto import FileInfo
 from app.config.setting import settings
 from app.service.file_utils import delete_folder
 from app.service.s3_file_uploader import upload_folder_to_s3, upload_single_file_to_s3
@@ -13,7 +15,14 @@ router = APIRouter()
 
 
 @router.post("/upload-file/")
-async def create_upload_file(file: UploadFile = File(...)):
+async def create_upload_file(
+    file: UploadFile = File(...),
+    player1_name: str = Form(...),
+    player2_name: str = Form(...),
+    location: str = Form(...),
+    date: str = Form(...)
+
+):
     # Generate a unique folder name using uuid4
     folder_name = str(uuid4())
     upload_path = os.path.join(settings.upload_dir, folder_name)
@@ -26,21 +35,29 @@ async def create_upload_file(file: UploadFile = File(...)):
     # Save the uploaded file to the folder
     file_path = os.path.join(upload_path, file.filename)
     with open(file_path, "wb") as f:
-        f.write(file.file.read())
+        f.write( await file.read())
+
+    file_info = FileInfo(
+        player1_name=player1_name,
+        player2_name=player2_name,
+        location=location,
+        date=date,
+        extension=file.filename.split('.')[-1]
+    )
 
     ## upload main_file in s3
     if settings.is_upload_to_s3:
-        upload_single_file_to_s3(file_path, settings.aws_s3_bucket_input)
+        upload_single_file_to_s3(file_path, settings.aws_s3_bucket_input, file_info)
 
-    video_clip_file_list = analysis_video(file_path, upload_path)
+    video_clip_file_list = analysis_video(file_path, upload_path, file_info)
     # Remove main file.
     os.remove(file_path)
 
     # upload video clip to s3
     s3_file_list = None
     if settings.is_upload_to_s3:
-        filename_without_extension, _ = os.path.splitext(os.path.basename(file_path))
-        s3_file_list = upload_folder_to_s3(upload_path, settings.aws_s3_bucket_output, filename_without_extension)
+        # filename_without_extension, _ = os.path.splitext(os.path.basename(file_path))
+        s3_file_list = upload_folder_to_s3(upload_path, settings.aws_s3_bucket_output)
 
     thumbnail_path = get_thumbnails_path(video_clip_file_list, thumbnail_path)
 

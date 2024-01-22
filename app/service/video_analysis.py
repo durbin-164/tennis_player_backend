@@ -5,10 +5,11 @@ import cv2
 from app.config.setting import settings
 from app.service.pose_generator import get_poses
 from app.service.serve_detector import get_serve_predict
+from app.service.utils import calculate_execution_time
 from app.service.video_written import write_and_upload_video
 
-
-def analysis_video(video_path: str, output_path: str):
+@calculate_execution_time
+def analysis_video(video_path: str, output_path: str, file_info):
     filename_without_extension, _ = os.path.splitext(os.path.basename(video_path))
     print(f"Processing file: {filename_without_extension}")
 
@@ -82,7 +83,7 @@ def analysis_video(video_path: str, output_path: str):
                 last_serve_frame = total_frame - int(frame_rate * 3)
 
                 video_output_path = os.path.join(output_path,
-                                                 f"{filename_without_extension}_{total_serve - 1}.mp4")
+                                                 f"{file_info.get_file_name()}clip{total_serve - 1}.mp4")
                 write_and_upload_video(
                     video_output_path,
                     frame_width,

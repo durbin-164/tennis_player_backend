@@ -34,21 +34,15 @@ def upload_file_to_s3(local_file_path, bucket_name, s3_file_name):
         print("Credentials not available.")
 
 
-def upload_folder_to_s3(local_folder_path, bucket_name, given_file_name=""):
+def upload_folder_to_s3(local_folder_path, bucket_name):
     s3_file_list =[]
     try:
         for root, dirs, files in os.walk(local_folder_path):
             for file in files:
                 local_file_path = os.path.join(root, file)
 
-                # Get the last folder name from the local file path
-                last_folder_name = os.path.basename(os.path.dirname(local_file_path))
-
-                # Create the S3 file name
-                s3_file_name = f"{last_folder_name}_{given_file_name}/{file}"
-
                 # Convert path separators to '/'
-                s3_file_name = s3_file_name.replace(os.path.sep, '/')
+                s3_file_name = file.replace(os.path.sep, '/')
 
                 # Upload the file to S3
                 public_url = upload_file_to_s3(local_file_path, bucket_name, s3_file_name)
@@ -58,12 +52,11 @@ def upload_folder_to_s3(local_folder_path, bucket_name, given_file_name=""):
 
     return s3_file_list
 
-def upload_single_file_to_s3(local_file_name, bucket_name):
+def upload_single_file_to_s3(local_file_name, bucket_name, file_info):
     try:
-        last_folder_name = os.path.basename(os.path.dirname(local_file_name))
-        file_name = os.path.basename(local_file_name)
-        s3_file_name = f"{last_folder_name}_{file_name}"
+        s3_file_name = f"{file_info.get_file_name()}.{file_info.extension}"
         upload_file_to_s3(local_file_name, bucket_name, s3_file_name)
 
     except NoCredentialsError:
         print("Credentials not available.")
+
