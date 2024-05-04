@@ -70,3 +70,16 @@ keep on bellow folders.
 project_root:
     - models
 ```
+
+### Here are Example outputs:
+
+https://github.com/durbin-164/tennis_player_backend/assets/30202494/b1e22b7c-ccaa-4851-a6ac-b7baf03a9f28
+
+https://github.com/durbin-164/tennis_player_backend/assets/30202494/61eaec13-8049-4e55-a200-917e0ba3e0c7
+
+
+
+
+
+
+
